@@ -2,6 +2,7 @@ package com.example.TransactionService.service;
 
 import com.example.TransactionService.dto.*;
 import com.example.TransactionService.model.*;
+import com.example.TransactionService.model.TransactionStatus;
 import com.example.TransactionService.repo.InventoryItemRepo;
 import com.example.TransactionService.repo.TransactionRepo;
 import com.example.TransactionService.repo.TransictionLineItemRepo;
