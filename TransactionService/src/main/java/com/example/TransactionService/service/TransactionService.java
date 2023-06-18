@@ -31,6 +31,7 @@ public class TransactionService {
   public TransactionLineItem addLineItem(Long transactionId, TransactionLineItemRequest request) {
     final Transaction transaction = getTransaction(transactionId);
     final TransactionLineItem transactionLineItem = convertToTransectionLineItem(request);
+    transactionLineItem.setUniqueId(request.getTransactionLineItemID());
     transactionLineItem.setTransactionId(transactionId);
     final TransactionLineItem actual = transictionLineItemRepo.save(transactionLineItem);
     transaction.getLineItems().add(actual.getUniqueId());
@@ -41,9 +42,11 @@ public class TransactionService {
   public InventoryItem addInventoryItem(Long lineItemId, InventoryItemRequest request) {
     final TransactionLineItem lineItem = getLineItem(lineItemId);
     final InventoryItem inventoryItem = converToInventoryItem(request);
+    inventoryItem.setUniqueId(request.getInventoryItemId());
     inventoryItem.setTransactionLineItemId(lineItem.getUniqueId());
     final InventoryItem saved = inventoryItemRepo.save(inventoryItem);
     lineItem.getInventoryId().add(saved.getUniqueId());
+    transictionLineItemRepo.save(lineItem);
     return saved;
   }
 
@@ -53,11 +56,10 @@ public class TransactionService {
     for (Long id : lineItemIds) {
       final TransactionLineItem transactionLineItem = getLineItem(id);
       if (!transactionLineItem.getInventoryId().isEmpty()) {
-        transactionRepo.delete(transaction);
-      } else {
         throw new IllegalStateException("Cannot delete a transaction with inventory items.");
       }
     }
+    transactionRepo.delete(transaction);
   }
 
   public AllItemResponse getAllInventory(Long transactionId) {

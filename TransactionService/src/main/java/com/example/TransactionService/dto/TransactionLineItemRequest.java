@@ -9,6 +9,7 @@ import lombok.experimental.Accessors;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class TransactionLineItemRequest {
 
+  private Long transactionLineItemID ;
   private ArticleMasterRequest article;
   private ColorMasterRequest colour;
   private double quantity;

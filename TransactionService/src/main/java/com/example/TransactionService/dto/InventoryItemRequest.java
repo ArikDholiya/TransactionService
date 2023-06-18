@@ -9,6 +9,7 @@ import lombok.experimental.Accessors;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class InventoryItemRequest {
 
+  private Long inventoryItemId;
   private ArticleMasterRequest article;
   private ColorMasterRequest colour;
   private CompanyLedgerMasterRequest company;
